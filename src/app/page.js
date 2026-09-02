@@ -1,4 +1,5 @@
 import HeroSection from "@/component/HeroSection";
+import ProductGridSection from "@/component/HomeProduct";
 import PosterScrollSection from "@/component/PosterScroolSection";
 
 export default function Home() {
@@ -6,6 +7,7 @@ export default function Home() {
     <div>
       <HeroSection />
       <PosterScrollSection />
+      <ProductGridSection/>
     </div>
   );
 }

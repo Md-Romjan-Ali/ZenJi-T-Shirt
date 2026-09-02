@@ -7,6 +7,8 @@ import {
     DropdownTrigger,
     DropdownMenu,
     DropdownItem,
+    Label,
+    Button,
 } from "@heroui/react";
 import { BiChevronDown, BiHeart, BiMenu, BiSearch, BiShoppingBag, BiUser, BiX } from "react-icons/bi";
 
@@ -38,7 +40,7 @@ export default function Navbar() {
 
     const navLinks = [
         { name: "DROP", href: "/drop" },
-        { name: "COLLECTION", href: "/collection" },
+        { name: "COLLECTION", href: "/all-product" },
         { name: "LOOKBOOK", href: "/lookbook" },
         { name: "OUR STORY", href: "/our-story" },
     ];
@@ -76,31 +78,30 @@ export default function Navbar() {
                         </Link>
                     ))}
 
-                    {/* Fixed Desktop HeroUI Dropdown */}
-                    <Dropdown placement="bottom-end">
-                        <DropdownTrigger className="p-0 bg-transparent text-neutral-300 hover:text-white text-xs font-semibold tracking-widest uppercase min-w-0 h-auto">
-                            <span className="inline-flex items-center">
+                    <Dropdown>
+                        <Button aria-label="Menu" variant="ghost">
+                            <span className="inline-flex items-center text-white hover:bg-black">
                                 MORE
                                 <BiChevronDown className="w-4 h-4 ml-1" />
                             </span>
-                        </DropdownTrigger>
-                        <DropdownMenu
-                            aria-label="More Options"
-                            className="bg-[#121212] border border-neutral-800 text-neutral-200 rounded-lg p-2 min-w-[180px]"
-                        >
-                            {moreLinks.map((item) => (
-                                <DropdownItem
-                                    key={item.name}
-                                    textValue={item.name}
-                                    className="hover:bg-neutral-800 rounded px-3 py-2 text-xs uppercase tracking-wider text-neutral-300 hover:text-white"
-                                >
-                                    <Link href={item.href} className="block w-full h-full">
-                                        {item.name}
-                                    </Link>
-                                </DropdownItem>
-                            ))}
-                        </DropdownMenu>
+                        </Button>
+                        <Dropdown.Popover>
+                            <Dropdown.Menu>
+                                {moreLinks.map((item) => (
+                                    <DropdownItem
+                                        key={item.name}
+                                        textValue={item.name}
+                                        className="hover:bg-neutral-800 rounded px-3 py-2 text-xs uppercase tracking-wider text-neutral-300 hover:text-white"
+                                    >
+                                        <Link href={item.href} className="block w-full h-full">
+                                            {item.name}
+                                        </Link>
+                                    </DropdownItem>
+                                ))}
+                            </Dropdown.Menu>
+                        </Dropdown.Popover>
                     </Dropdown>
+
                 </nav>
 
                 {/* Right Actions & Mobile Trigger */}

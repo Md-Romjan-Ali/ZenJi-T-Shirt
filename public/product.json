@@ -1,0 +1,107 @@
+[
+  {
+    "id": 1,
+    "productName": "Classic Cotton T-Shirt",
+    "price": 499,
+    "originalPrice": 699,
+    "image": "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=800&auto=format&fit=crop"
+  },
+  {
+    "id": 2,
+    "productName": "Premium Polo Shirt",
+    "price": 899,
+    "originalPrice": 1199,
+    "image": "https://images.unsplash.com/photo-1625910513413-5fc45e7d7d0a?q=80&w=800&auto=format&fit=crop"
+  },
+  {
+    "id": 3,
+    "productName": "Oversized Streetwear T-Shirt",
+    "price": 749,
+    "originalPrice": 999,
+    "image": "https://images.unsplash.com/photo-1503341504253-dff4815485f1?q=80&w=800&auto=format&fit=crop"
+  },
+  {
+    "id": 4,
+    "productName": "Slim Fit Casual Shirt",
+    "price": 999,
+    "originalPrice": 1299,
+    "image": "https://images.unsplash.com/photo-1603252109303-2751441dd157?q=80&w=800&auto=format&fit=crop"
+  },
+  {
+    "id": 5,
+    "productName": "Graphic Print T-Shirt",
+    "price": 599,
+    "originalPrice": 799,
+    "image": "https://images.unsplash.com/photo-1576566588028-4147f3842f27?q=80&w=800&auto=format&fit=crop"
+  },
+  {
+    "id": 6,
+    "productName": "Classic Denim Jacket",
+    "price": 1499,
+    "originalPrice": 1999,
+    "image": "https://images.unsplash.com/photo-1543076447-215ad9ba6923?q=80&w=800&auto=format&fit=crop"
+  },
+  {
+    "id": 7,
+    "productName": "Casual Linen Shirt",
+    "price": 1099,
+    "originalPrice": 1399,
+    "image": "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?q=80&w=800&auto=format&fit=crop"
+  },
+  {
+    "id": 8,
+    "productName": "Athletic Performance T-Shirt",
+    "price": 699,
+    "originalPrice": 899,
+    "image": "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?q=80&w=800&auto=format&fit=crop"
+  },
+  {
+    "id": 9,
+    "productName": "Minimalist Black T-Shirt",
+    "price": 449,
+    "originalPrice": 649,
+    "image": "https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?q=80&w=800&auto=format&fit=crop"
+  },
+  {
+    "id": 10,
+    "productName": "Striped Casual T-Shirt",
+    "price": 549,
+    "originalPrice": 749,
+    "image": "https://images.unsplash.com/photo-1527719327859-5cce2a4d6a9f?q=80&w=800&auto=format&fit=crop"
+  },
+  {
+    "id": 11,
+    "productName": "Premium Henley Shirt",
+    "price": 799,
+    "originalPrice": 1099,
+    "image": "https://images.unsplash.com/photo-1586790170083-2f9ceadc732d?q=80&w=800&auto=format&fit=crop"
+  },
+  {
+    "id": 12,
+    "productName": "Relaxed Fit Hoodie",
+    "price": 1299,
+    "originalPrice": 1699,
+    "image": "https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=800&auto=format&fit=crop"
+  },
+  {
+    "id": 13,
+    "productName": "Summer V-Neck T-Shirt",
+    "price": 479,
+    "originalPrice": 699,
+    "image": "https://images.unsplash.com/photo-1562157873-818bc0726f68?q=80&w=800&auto=format&fit=crop"
+  },
+  {
+    "id": 14,
+    "productName": "Urban Cargo Pants",
+    "price": 1199,
+    "originalPrice": 1599,
+    "image": "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?q=80&w=800&auto=format&fit=crop"
+  },
+  {
+    "id": 15,
+    "productName": "Premium Full Sleeve Shirt",
+    "price": 1099,
+    "originalPrice": 1399,
+    "image": "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?q=80&w=800&auto=format&fit=crop"
+  }
+]
