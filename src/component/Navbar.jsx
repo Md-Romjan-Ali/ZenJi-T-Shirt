@@ -7,7 +7,6 @@ import {
     DropdownTrigger,
     DropdownMenu,
     DropdownItem,
-    Button,
 } from "@heroui/react";
 import { BiChevronDown, BiHeart, BiMenu, BiSearch, BiShoppingBag, BiUser, BiX } from "react-icons/bi";
 
@@ -79,15 +78,11 @@ export default function Navbar() {
 
                     {/* Fixed Desktop HeroUI Dropdown */}
                     <Dropdown placement="bottom-end">
-                        <DropdownTrigger>
-                            <Button
-                                variant="light"
-                                disableRipple
-                                className="p-0 bg-transparent hover:bg-transparent text-neutral-300 hover:text-white text-xs font-semibold tracking-widest uppercase min-w-0 h-auto data-[hover=true]:bg-transparent"
-                                endContent={<BiChevronDown className="w-4 h-4 ml-1" />}
-                            >
+                        <DropdownTrigger className="p-0 bg-transparent text-neutral-300 hover:text-white text-xs font-semibold tracking-widest uppercase min-w-0 h-auto">
+                            <span className="inline-flex items-center">
                                 MORE
-                            </Button>
+                                <BiChevronDown className="w-4 h-4 ml-1" />
+                            </span>
                         </DropdownTrigger>
                         <DropdownMenu
                             aria-label="More Options"
@@ -139,15 +134,13 @@ export default function Navbar() {
                             isOpen={isMobileOpen}
                             onOpenChange={setIsMobileOpen}
                         >
-                            <DropdownTrigger>
-                                <Button
-                                    isIconOnly
-                                    variant="light"
-                                    aria-label="Open Mobile Menu"
-                                    className="text-white min-w-0 w-8 h-8 p-0"
-                                >
+                            <DropdownTrigger
+                                aria-label="Open Mobile Menu"
+                                className="text-white min-w-0 w-8 h-8 p-0"
+                            >
+                                <span className="inline-flex items-center justify-center">
                                     {isMobileOpen ? <BiX className="w-6 h-6" /> : <BiMenu className="w-6 h-6" />}
-                                </Button>
+                                </span>
                             </DropdownTrigger>
                             <DropdownMenu
                                 aria-label="Mobile Navigation"
