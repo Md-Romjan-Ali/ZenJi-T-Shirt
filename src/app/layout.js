@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "@/component/Navbar";
 import MarqueePage from "@/component/Marquee";
 import Footer from "@/component/Footer";
+import ProviderPage from "@/component/Provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,10 +27,13 @@ export default function RootLayout({ children }) {
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <Navbar />
-        <MarqueePage />
-        {children}
-        <Footer/>
+        <ProviderPage>
+          <Navbar />
+          <MarqueePage />
+          {children}
+          <Footer />
+        </ProviderPage>
+
       </body>
     </html>
   );

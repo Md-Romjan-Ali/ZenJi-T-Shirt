@@ -7,7 +7,6 @@ import {
     DropdownTrigger,
     DropdownMenu,
     DropdownItem,
-    Label,
     Button,
 } from "@heroui/react";
 import { BiChevronDown, BiHeart, BiMenu, BiSearch, BiShoppingBag, BiUser, BiX } from "react-icons/bi";
@@ -41,7 +40,7 @@ export default function Navbar() {
     const navLinks = [
         { name: "DROP", href: "/drop" },
         { name: "COLLECTION", href: "/all-product" },
-        { name: "LOOKBOOK", href: "/lookbook" },
+        { name: "LOOKBOOK", href: "/look-book" },
         { name: "OUR STORY", href: "/our-story" },
     ];
 
@@ -51,7 +50,7 @@ export default function Navbar() {
         { name: "Shipping & Returns", href: "/shipping" },
         { name: "Size Guide", href: "/size-guide" },
     ];
-
+  
     return (
         <header
             className={`fixed top-0 left-0 w-full z-50 bg-[#0a0a0a] border-b border-neutral-900 text-white font-sans tracking-wider transition-transform duration-300 ease-in-out ${isVisible ? "translate-y-0" : "-translate-y-full"
