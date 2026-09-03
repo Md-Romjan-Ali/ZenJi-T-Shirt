@@ -11,16 +11,16 @@ export default function Footer() {
       title: "DROPS",
       links: [
         { name: "Home", href: "/" },
-        { name: "Drop", href: "/drop" },
-        { name: "Collection", href: "/collection" },
+        { name: "Drop", href: "/" },
+        { name: "Collection", href: "/all-product" },
       ],
     },
     {
       title: "EXPLORE",
       links: [
-        { name: "Lookbook", href: "/lookbook" },
+        { name: "Lookbook", href: "/look-book" },
         { name: "Our Story", href: "/our-story" },
-        { name: "Collection", href: "/collection" },
+        { name: "Collection", href: "/all-product" },
       ],
     },
     {
@@ -35,11 +35,11 @@ export default function Footer() {
       title: "CONTACT",
       links: [
         { name: "FAQ", href: "/faq" },
-        { name: "Review", href: "/reviews" },
-        { name: "Privacy Policy", href: "/privacy-policy" },
-        { name: "Terms", href: "/terms" },
-        { name: "Help", href: "/help" },
-        { name: "Return Policy", href: "/returns" },
+        { name: "Review", href: "#" },
+        { name: "Privacy Policy", href: "#" },
+        { name: "Terms", href: "#" },
+        { name: "Help", href: "#" },
+        { name: "Return Policy", href: "#" },
         { name: "Contact Us", href: "/contact" },
       ],
     },
@@ -131,7 +131,6 @@ export default function Footer() {
                     <li key={link.name}>
                       <Link
                         href={link.href}
-                        target={link.external ? "_blank" : "_self"}
                         rel={link.external ? "noopener noreferrer" : ""}
                         className="text-neutral-700 dark:text-neutral-300 hover:text-black dark:hover:text-white transition-colors duration-200 font-sans"
                       >

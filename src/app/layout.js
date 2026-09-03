@@ -4,6 +4,7 @@ import Navbar from "@/component/Navbar";
 import MarqueePage from "@/component/Marquee";
 import Footer from "@/component/Footer";
 import ProviderPage from "@/component/Provider";
+import { Toaster } from "sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,6 +33,7 @@ export default function RootLayout({ children }) {
           <MarqueePage />
           {children}
           <Footer />
+          <Toaster position="top-right" richColors closeButton />
         </ProviderPage>
 
       </body>

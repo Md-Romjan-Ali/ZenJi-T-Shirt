@@ -10,9 +10,12 @@ import {
     Button,
 } from "@heroui/react";
 import { BiChevronDown, BiHeart, BiMenu, BiSearch, BiShoppingBag, BiUser, BiX } from "react-icons/bi";
+import { AuthContext } from "./AuthContext";
+import { useContext } from "react";
 
 export default function Navbar() {
-    const [cartCount, setCartCount] = useState(3);
+    const { orders = [] } = useContext(AuthContext) || {};
+    const cartCount = orders.reduce((total, order) => total + order.quantity, 0);
     const [isMobileOpen, setIsMobileOpen] = useState(false);
     const [isVisible, setIsVisible] = useState(true);
     const [lastScrollY, setLastScrollY] = useState(0);
@@ -107,19 +110,19 @@ export default function Navbar() {
                         <BiSearch className="w-5 h-5 stroke-[1.8]" />
                     </button>
 
-                    <button aria-label="Wishlist" className="hover:text-white transition-colors p-1">
+                    <Link href="/favourites" aria-label="Wishlist" className="hover:text-white transition-colors p-1">
                         <BiHeart className="w-5 h-5 stroke-[1.8]" />
-                    </button>
+                    </Link>
 
                     {/* Cart Counter */}
-                    <button aria-label="Cart" className="relative hover:text-white transition-colors p-1">
+                    <Link href="/orders" aria-label={`Cart with ${cartCount} items`} className="relative hover:text-white transition-colors p-1">
                         <BiShoppingBag className="w-5 h-5 stroke-[1.8]" />
                         {cartCount > 0 && (
                             <span className="absolute -top-1 -right-2 bg-red-600 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
                                 {cartCount}
                             </span>
                         )}
-                    </button>
+                    </Link>
 
                     <button aria-label="Account" className="hover:text-white transition-colors p-1 hidden sm:block">
                         <BiUser className="w-5 h-5 stroke-[1.8]" />
