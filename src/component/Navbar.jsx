@@ -38,7 +38,7 @@ export default function Navbar() {
     }, [lastScrollY]);
 
     const navLinks = [
-        { name: "DROP", href: "/drop" },
+        { name: "Home", href: "/" },
         { name: "COLLECTION", href: "/all-product" },
         { name: "LOOKBOOK", href: "/look-book" },
         { name: "OUR STORY", href: "/our-story" },
@@ -47,10 +47,8 @@ export default function Navbar() {
     const moreLinks = [
         { name: "FAQ", href: "/faq" },
         { name: "Contact", href: "/contact" },
-        { name: "Shipping & Returns", href: "/shipping" },
-        { name: "Size Guide", href: "/size-guide" },
     ];
-  
+
     return (
         <header
             className={`fixed top-0 left-0 w-full z-50 bg-[#0a0a0a] border-b border-neutral-900 text-white font-sans tracking-wider transition-transform duration-300 ease-in-out ${isVisible ? "translate-y-0" : "-translate-y-full"
@@ -79,7 +77,7 @@ export default function Navbar() {
 
                     <Dropdown>
                         <Button aria-label="Menu" variant="ghost">
-                            <span className="inline-flex items-center text-white hover:bg-black">
+                            <span className="inline-flex items-center text-white rounded-full hover:bg-black px-3 py-1.5">
                                 MORE
                                 <BiChevronDown className="w-4 h-4 ml-1" />
                             </span>
@@ -90,7 +88,7 @@ export default function Navbar() {
                                     <DropdownItem
                                         key={item.name}
                                         textValue={item.name}
-                                        className="hover:bg-neutral-800 rounded px-3 py-2 text-xs uppercase tracking-wider text-neutral-300 hover:text-white"
+                                        className="hover:bg-black rounded px-3 py-2 text-xs uppercase tracking-wider hover:text-neutral-300 text-black"
                                     >
                                         <Link href={item.href} className="block w-full h-full">
                                             {item.name}
