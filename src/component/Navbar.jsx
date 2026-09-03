@@ -1,173 +1,238 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext, useRef } from "react";
+import { useTheme } from "next-themes";
 import {
-    Dropdown,
-    DropdownTrigger,
-    DropdownMenu,
-    DropdownItem,
-    Button,
-} from "@heroui/react";
-import { BiChevronDown, BiHeart, BiMenu, BiSearch, BiShoppingBag, BiUser, BiX } from "react-icons/bi";
+  BiChevronDown,
+  BiHeart,
+  BiMenu,
+  BiMoon,
+  BiSearch,
+  BiShoppingBag,
+  BiSun,
+  BiUser,
+  BiX,
+} from "react-icons/bi";
 import { AuthContext } from "./AuthContext";
-import { useContext } from "react";
 
 export default function Navbar() {
-    const { orders = [] } = useContext(AuthContext) || {};
-    const cartCount = orders.reduce((total, order) => total + order.quantity, 0);
-    const [isMobileOpen, setIsMobileOpen] = useState(false);
-    const [isVisible, setIsVisible] = useState(true);
-    const [lastScrollY, setLastScrollY] = useState(0);
+  const { orders = [] } = useContext(AuthContext) || {};
+  const cartCount = orders.reduce((total, order) => total + order.quantity, 0);
+  const { resolvedTheme, setTheme } = useTheme();
 
-    // Scroll Direction Handler (Hide on scroll down, Show on scroll up)
-    useEffect(() => {
-        const handleScroll = () => {
-            const currentScrollY = window.scrollY;
+  // Mobile Menu & Desktop Dropdown States
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const [isMoreOpen, setIsMoreOpen] = useState(false);
 
-            if (currentScrollY < 10) {
-                setIsVisible(true);
-            } else if (currentScrollY > lastScrollY && currentScrollY > 80) {
-                setIsVisible(false); // Hide on scroll down past header threshold
-            } else if (currentScrollY < lastScrollY) {
-                setIsVisible(true); // Show on scroll up
-            }
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
 
-            setLastScrollY(currentScrollY);
-        };
+  const moreDropdownRef = useRef(null);
 
-        window.addEventListener("scroll", handleScroll, { passive: true });
-        return () => window.removeEventListener("scroll", handleScroll);
-    }, [lastScrollY]);
+  // Close Desktop "MORE" Dropdown on outside click
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        moreDropdownRef.current &&
+        !moreDropdownRef.current.contains(event.target)
+      ) {
+        setIsMoreOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
-    const navLinks = [
-        { name: "Home", href: "/" },
-        { name: "COLLECTION", href: "/all-product" },
-        { name: "LOOKBOOK", href: "/look-book" },
-        { name: "OUR STORY", href: "/our-story" },
-    ];
+  // Scroll Direction Handler (Hide on scroll down, Show on scroll up)
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
 
-    const moreLinks = [
-        { name: "FAQ", href: "/faq" },
-        { name: "Contact", href: "/contact" },
-    ];
+      if (currentScrollY < 10) {
+        setIsVisible(true);
+      } else if (currentScrollY > lastScrollY && currentScrollY > 80) {
+        setIsVisible(false);
+        setIsMoreOpen(false);
+        setIsMobileOpen(false);
+      } else if (currentScrollY < lastScrollY) {
+        setIsVisible(true);
+      }
 
-    return (
-        <header
-            className={`fixed top-0 left-0 w-full z-50 bg-[#0a0a0a] border-b border-neutral-900 text-white font-sans tracking-wider transition-transform duration-300 ease-in-out ${isVisible ? "translate-y-0" : "-translate-y-full"
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [lastScrollY]);
+
+  const navLinks = [
+    { name: "Home", href: "/" },
+    { name: "COLLECTION", href: "/all-product" },
+    { name: "LOOKBOOK", href: "/look-book" },
+    { name: "OUR STORY", href: "/our-story" },
+  ];
+
+  const moreLinks = [
+    { name: "FAQ", href: "/faq" },
+    { name: "Contact", href: "/contact" },
+  ];
+
+  return (
+    <header
+      className={`fixed top-0 left-0 w-full z-50 bg-white dark:bg-[#050505] border-b border-neutral-200 dark:border-neutral-800/80 text-neutral-900 dark:text-white font-sans tracking-wider transition-all duration-300 ease-in-out ${
+        isVisible ? "translate-y-0" : "-translate-y-full"
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+        
+        {/* Brand Logo */}
+        <div className="flex-shrink-0 flex items-center">
+          <Link
+            href="/"
+            className="text-2xl sm:text-3xl font-black tracking-tighter uppercase italic text-neutral-950 dark:text-white hover:text-red-600 dark:hover:text-red-500 transition-colors"
+          >
+            ZENJI
+          </Link>
+        </div>
+
+        {/* Desktop Navigation */}
+        <nav className="hidden lg:flex items-center space-x-8 text-xs font-bold tracking-widest text-neutral-700 dark:text-neutral-300">
+          {navLinks.map((link) => (
+            <Link
+              key={link.name}
+              href={link.href}
+              className="hover:text-red-600 dark:hover:text-white transition-colors duration-200"
+            >
+              {link.name}
+            </Link>
+          ))}
+
+          {/* Fully Responsive "MORE" Dropdown Menu */}
+          <div className="relative" ref={moreDropdownRef}>
+            <button
+              type="button"
+              onClick={() => setIsMoreOpen(!isMoreOpen)}
+              className="inline-flex items-center uppercase text-xs font-bold tracking-widest text-neutral-700 dark:text-neutral-300 hover:text-red-600 dark:hover:text-white transition-colors focus:outline-none"
+            >
+              <span>MORE</span>
+              <BiChevronDown
+                className={`w-4 h-4 ml-0.5 transition-transform duration-200 ${
+                  isMoreOpen ? "rotate-180" : ""
                 }`}
-        >
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+              />
+            </button>
 
-                {/* Brand Logo */}
-                <div className="flex-shrink-0 flex items-center">
-                    <Link href="/" className="text-2xl sm:text-3xl font-black tracking-tighter uppercase italic text-white">
-                        ZENJI
-                    </Link>
-                </div>
+            {/* "MORE" Menu Popover */}
+            {isMoreOpen && (
+              <div className="absolute right-0 mt-3 w-40 bg-white dark:bg-[#0e0e0e] border border-neutral-200 dark:border-neutral-800 rounded-xl shadow-xl py-2 z-50 transition-all">
+                {moreLinks.map((item) => (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    onClick={() => setIsMoreOpen(false)}
+                    className="block px-4 py-2.5 text-xs uppercase font-semibold tracking-wider text-neutral-800 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-900 hover:text-red-600 dark:hover:text-red-500 transition-colors"
+                  >
+                    {item.name}
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
+        </nav>
 
-                {/* Desktop Navigation */}
-                <nav className="hidden lg:flex items-center space-x-8 text-xs font-semibold tracking-widest text-neutral-300">
-                    {navLinks.map((link) => (
-                        <Link
-                            key={link.name}
-                            href={link.href}
-                            className="hover:text-white transition-colors duration-200"
-                        >
-                            {link.name}
-                        </Link>
-                    ))}
+        {/* Right Action Icons & Mobile Menu Trigger */}
+        <div className="flex items-center space-x-2 sm:space-x-4 text-neutral-800 dark:text-neutral-200">
+          
+          {/* Theme Toggle */}
+          <button
+            suppressHydrationWarning
+            aria-label="Toggle theme"
+            onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
+            className="p-2 rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-900 hover:text-red-600 dark:hover:text-red-500 transition-colors"
+          >
+            {resolvedTheme === "dark" ? (
+              <BiSun className="h-5 w-5" />
+            ) : (
+              <BiMoon className="h-5 w-5" />
+            )}
+          </button>
 
-                    <Dropdown>
-                        <Button aria-label="Menu" variant="ghost">
-                            <span className="inline-flex items-center text-white rounded-full hover:bg-black px-3 py-1.5">
-                                MORE
-                                <BiChevronDown className="w-4 h-4 ml-1" />
-                            </span>
-                        </Button>
-                        <Dropdown.Popover>
-                            <Dropdown.Menu>
-                                {moreLinks.map((item) => (
-                                    <DropdownItem
-                                        key={item.name}
-                                        textValue={item.name}
-                                        className="hover:bg-black rounded px-3 py-2 text-xs uppercase tracking-wider hover:text-neutral-300 text-black"
-                                    >
-                                        <Link href={item.href} className="block w-full h-full">
-                                            {item.name}
-                                        </Link>
-                                    </DropdownItem>
-                                ))}
-                            </Dropdown.Menu>
-                        </Dropdown.Popover>
-                    </Dropdown>
+          {/* Search Button */}
+          <button
+            aria-label="Search"
+            className="p-2 rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-900 hover:text-red-600 dark:hover:text-red-500 transition-colors"
+          >
+            <BiSearch className="w-5 h-5 stroke-[1.8]" />
+          </button>
 
-                </nav>
+          {/* Wishlist Link */}
+          <Link
+            href="/favourites"
+            aria-label="Wishlist"
+            className="p-2 rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-900 hover:text-red-600 dark:hover:text-red-500 transition-colors"
+          >
+            <BiHeart className="w-5 h-5 stroke-[1.8]" />
+          </Link>
 
-                {/* Right Actions & Mobile Trigger */}
-                <div className="flex items-center space-x-4 sm:space-x-5 text-neutral-200">
-                    <button aria-label="Search" className="hover:text-white transition-colors p-1">
-                        <BiSearch className="w-5 h-5 stroke-[1.8]" />
-                    </button>
+          {/* Cart Counter */}
+          <Link
+            href="/orders"
+            aria-label={`Cart with ${cartCount} items`}
+            className="relative p-2 rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-900 hover:text-red-600 dark:hover:text-red-500 transition-colors"
+          >
+            <BiShoppingBag className="w-5 h-5 stroke-[1.8]" />
+            {cartCount > 0 && (
+              <span className="absolute top-0.5 right-0.5 bg-red-600 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
+                {cartCount}
+              </span>
+            )}
+          </Link>
 
-                    <Link href="/favourites" aria-label="Wishlist" className="hover:text-white transition-colors p-1">
-                        <BiHeart className="w-5 h-5 stroke-[1.8]" />
-                    </Link>
+          {/* Account Icon */}
+          <button
+            aria-label="Account"
+            className="p-2 rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-900 hover:text-red-600 dark:hover:text-red-500 transition-colors hidden sm:block"
+          >
+            <BiUser className="w-5 h-5 stroke-[1.8]" />
+          </button>
 
-                    {/* Cart Counter */}
-                    <Link href="/orders" aria-label={`Cart with ${cartCount} items`} className="relative hover:text-white transition-colors p-1">
-                        <BiShoppingBag className="w-5 h-5 stroke-[1.8]" />
-                        {cartCount > 0 && (
-                            <span className="absolute -top-1 -right-2 bg-red-600 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
-                                {cartCount}
-                            </span>
-                        )}
-                    </Link>
+          {/* Mobile Hamburger Menu Toggle */}
+          <div className="lg:hidden pl-1">
+            <button
+              onClick={() => setIsMobileOpen(!isMobileOpen)}
+              aria-label="Toggle Mobile Menu"
+              className="p-2 rounded-lg text-neutral-900 dark:text-white hover:bg-neutral-100 dark:hover:bg-neutral-900 focus:outline-none"
+            >
+              {isMobileOpen ? (
+                <BiX className="w-7 h-7" />
+              ) : (
+                <BiMenu className="w-7 h-7" />
+              )}
+            </button>
+          </div>
 
-                    <button aria-label="Account" className="hover:text-white transition-colors p-1 hidden sm:block">
-                        <BiUser className="w-5 h-5 stroke-[1.8]" />
-                    </button>
+        </div>
 
-                    {/* Mobile HeroUI Dropdown Menu Button */}
-                    <div className="lg:hidden pl-1">
-                        <Dropdown
-                            placement="bottom-end"
-                            isOpen={isMobileOpen}
-                            onOpenChange={setIsMobileOpen}
-                        >
-                            <DropdownTrigger
-                                aria-label="Open Mobile Menu"
-                                className="text-white min-w-0 w-8 h-8 p-0"
-                            >
-                                <span className="inline-flex items-center justify-center">
-                                    {isMobileOpen ? <BiX className="w-6 h-6" /> : <BiMenu className="w-6 h-6" />}
-                                </span>
-                            </DropdownTrigger>
-                            <DropdownMenu
-                                aria-label="Mobile Navigation"
-                                className="bg-[#121212] border border-neutral-800 text-white rounded-lg p-2 w-56"
-                            >
-                                {[...navLinks, ...moreLinks].map((link) => (
-                                    <DropdownItem
-                                        key={link.name}
-                                        textValue={link.name}
-                                        className="hover:bg-neutral-800 text-xs font-semibold uppercase tracking-wider text-neutral-200 py-2.5"
-                                    >
-                                        <Link
-                                            href={link.href}
-                                            className="block w-full"
-                                            onClick={() => setIsMobileOpen(false)}
-                                        >
-                                            {link.name}
-                                        </Link>
-                                    </DropdownItem>
-                                ))}
-                            </DropdownMenu>
-                        </Dropdown>
-                    </div>
-                </div>
+      </div>
 
-            </div>
-        </header>
-    );
+      {/* Mobile Accordion Drawer */}
+      {isMobileOpen && (
+        <div className="lg:hidden bg-white dark:bg-[#080808] border-b border-neutral-200 dark:border-neutral-800 px-6 py-6 space-y-4 shadow-2xl transition-all">
+          <div className="flex flex-col space-y-3">
+            {[...navLinks, ...moreLinks].map((link) => (
+              <Link
+                key={link.name}
+                href={link.href}
+                onClick={() => setIsMobileOpen(false)}
+                className="text-sm font-bold uppercase tracking-widest py-2 text-neutral-800 dark:text-neutral-200 hover:text-red-600 dark:hover:text-red-500 border-b border-neutral-100 dark:border-neutral-900 transition-colors"
+              >
+                {link.name}
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
+    </header>
+  );
 }

@@ -44,6 +44,15 @@ const orderStore = {
         const nextOrders = [...orders, { ...order, id: `${order.productId}-${Date.now()}` }]
         window.localStorage.setItem('zenji-orders', JSON.stringify(nextOrders))
         orderStore.listeners.forEach(listener => listener())
+    },
+    remove: (orderId) => {
+        const orders = JSON.parse(orderStore.getSnapshot())
+        window.localStorage.setItem('zenji-orders', JSON.stringify(orders.filter(order => order.id !== orderId)))
+        orderStore.listeners.forEach(listener => listener())
+    },
+    clear: () => {
+        window.localStorage.setItem('zenji-orders', '[]')
+        orderStore.listeners.forEach(listener => listener())
     }
 }
 
@@ -72,13 +81,17 @@ const ProviderPage = ({ children }) => {
     const addOrder = (order) => {
         orderStore.add(order)
     }
+    const removeOrder = (orderId) => orderStore.remove(orderId)
+    const clearOrders = () => orderStore.clear()
     const data = {
         products,
         setProducts,
         favouriteIds,
         toggleFavourite,
         orders,
-        addOrder
+        addOrder,
+        removeOrder,
+        clearOrders
     }
     return (
         <div>
